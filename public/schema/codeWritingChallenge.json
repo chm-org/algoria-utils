@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CodeWritingChallenge",
+  "type": "object",
+  "description": "A challenge that has at least one function for further implementation by users.",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the challenge."
+    },
+    "type": {
+      "const": "codeWriting"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the challenge."
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Markdown-supported text describing the challenge."
+        },
+        "hints": {
+          "type": "array",
+          "description": "List of hints in Markdown format.",
+          "items": {
+            "type": "string",
+            "description": "A single hint in Markdown format."
+          }
+        }
+      },
+      "required": [
+        "description",
+        "hints"
+      ]
+    },
+    "boilerplateCode": {
+      "type": "string",
+      "description": "Starter code provided for the challenge."
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "The challenge cannot be completed unless dependent challenges are completed",
+      "items": {
+        "type": "string",
+        "description": "Challenge identifier"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "title",
+    "content",
+    "boilerplateCode",
+    "dependencies"
+  ]
+}

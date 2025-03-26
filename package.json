@@ -1,0 +1,24 @@
+{
+  "name": "algoria-utils",
+  "version": "0.0.9",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npx tsc",
+    "get-types": "node get-type-from-schema.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1"
+  }
+}

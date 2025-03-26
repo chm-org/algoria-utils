@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SkillTree",
+  "description": "JSON schema representing a skill tree structure.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the skill tree."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the skill tree."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the skill tree."
+    }
+  },
+  "required": ["id", "name", "description"]
+}

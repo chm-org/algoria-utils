@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CodeWritingExpectations",
+  "description": "JSON schema for defining test cases for code submission and expected results.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "challengeId": {
+      "type": "string",
+      "description": "Associated challenge"
+    },
+    "type": {
+      "const": "codeWriting"
+    },
+    "functions": {
+      "type": "array",
+      "description": "List of functions and their test configurations.",
+      "items": {
+        "$ref": "#/definitions/TestSuite"
+      }
+    }
+  },
+  "required": ["challengeId", "type", "functions"],
+  "definitions": {
+    "TestSuite": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "functionName": {
+          "type": "string",
+          "description": "Name of the function to be tested."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of what the function does."
+        },
+        "testCases": {
+          "type": "array",
+          "description": "A list of test cases for this function.",
+          "items": { "$ref": "#/definitions/TestCase" }
+        }
+      },
+      "required": ["functionName", "testCases"]
+    },
+    "TestCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input": {
+          "type": "array",
+          "description": "An array representing the input parameters for the function."
+        },
+        "expectedOutput": {
+          "type": ["string", "number", "boolean", "array", "null", "object"],
+          "description": "The expected result of the test. Can be any type."
+        },
+        "matcherType": {
+          "type": "string",
+          "description": "A matcher function to use for verifying results.",
+          "enum": ["strictEqual", "deepEqual"]
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of what the test case is validating."
+        }
+      },
+      "required": ["input", "expectedOutput", "matcherType"]
+    }
+  }
+}

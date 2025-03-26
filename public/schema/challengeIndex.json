@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChallengeIndex",
+  "description": "JSON schema representing challenges index.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the index."
+    },
+    "type": {
+      "type": "string",
+      "description": "Index type",
+      "enum": [
+        "story",
+        "skillTree"
+      ]
+    },
+    "skillTreeId": {
+      "type": "string",
+      "description": "If it is a skillTree index, this identifier points to the particular tree."
+    },
+    "challenges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["id", "type", "challenges"]
+}
