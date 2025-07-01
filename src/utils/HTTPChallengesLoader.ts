@@ -1,13 +1,13 @@
-import type { ChallengeLoader, Logger } from '../interfaces';
+import type { ChallengeLoader, Logger, LoggerFactory } from '../interfaces';
 import type { Challenge, Expectations } from '../types';
 
 export class HTTPChallengesLoader implements ChallengeLoader {
   private readonly challengeRepoPath: string;
   private logger: Logger;
 
-  constructor(challengeRepoPath: string, logger: Logger) {
+  constructor(challengeRepoPath: string, loggerFactory: LoggerFactory) {
     this.challengeRepoPath = challengeRepoPath;
-    this.logger = logger;
+    this.logger = loggerFactory.create('HTTPChallengesLoader');
   }
 
   // Load all challenges from the challenges index, ensure async/await is used
