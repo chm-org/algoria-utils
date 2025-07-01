@@ -27,8 +27,8 @@ jobs:
           git config --global user.email "github-actions[bot]"
           git config --global user.name  "github-actions@github.com"
           git checkout --orphan gh-pages
-          git reset --hard
-          cp -r public/* .
+
+          cp -a public/. .
           touch .nojekyll          # avoids Jekyll processing
           git add .
           git commit -m "Deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
