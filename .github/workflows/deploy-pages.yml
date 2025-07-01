@@ -1,0 +1,35 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # required for push to gh-pages
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      # Build step (optional, only if the build step is required):
+      # - name: Install & build
+      #   run: |
+      #     npm ci
+      #     npm run build
+
+      # If the content to publish is already in /public
+      # copying is possible without building:
+      - name: Copy public folder to gh-pages
+        run: |
+          git config --global user.email "github-actions[bot]"
+          git config --global user.name  "github-actions@github.com"
+          git checkout --orphan gh-pages
+          git reset --hard
+          cp -r public/* .
+          touch .nojekyll          # avoids Jekyll processing
+          git add .
+          git commit -m "Deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push -f origin gh-pages
