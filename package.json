@@ -10,15 +10,15 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npx tsc",
+    "build": "npm run get-types && npx tsc",
     "get-types": "node get-type-from-schema.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Roman Kordas",
+  "license": "BY-NC-SA 4.0",
   "devDependencies": {
     "json-schema-to-typescript": "^15.0.4",
     "typescript": "^5.8.2",
-    "vite": "^6.2.1"
+    "vite": "^6.3.5"
   }
 }
