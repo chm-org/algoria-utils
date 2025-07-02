@@ -17,6 +17,9 @@ concurrency:                  # cancel previous deployments from the same ref
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:            # 👈 required by GitHub Pages
+      name: github-pages    # must be this exact string
+      url: ${{ steps.deployment.outputs.page_url }} # optional – surfaces link in UI
 
     steps:
       # 1. Checkout source
