@@ -1,35 +1,53 @@
-name: Deploy to GitHub Pages
+name: Deploy static site to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main]          # rebuild Pages whenever main is updated
+  workflow_dispatch:          # allow manual re-deploys
 
-permissions:
-  contents: write # required for push to gh-pages
+permissions:                  # least-privilege matrix for GitHub Pages
+  contents: read              # required by actions/checkout
+  pages: write                # publish to gh-pages
+  id-token: write             # verify deployment with OIDC
+
+concurrency:                  # cancel previous deployments from the same ref
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      # 1. Checkout source
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
-      # Build step (optional, only if the build step is required):
-      # - name: Install & build
+
+      # 2. (Optional) build step
+      #    Uncomment if you need to produce /public with a build tool.
+      # - name: Install dependencies & build
       #   run: |
       #     npm ci
       #     npm run build
 
-      # If the content to publish is already in /public
-      # copying is possible without building:
-      - name: Copy public folder to gh-pages
-        run: |
-          git config --global user.email "github-actions[bot]"
-          git config --global user.name  "github-actions@github.com"
-          git checkout --orphan gh-pages
+      # 3. Guarantee static assets live at ./public
+      #    If you already commit them, nothing happens.
+      - name: Assert public directory exists
+        run: test -d public
 
-          cp -a public/. .
-          touch .nojekyll          # avoids Jekyll processing
-          git add .
-          git commit -m "Deploy $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-          git push -f origin gh-pages
+      # 4. Upload ./public as the artifact for Pages
+      - name: Upload static content
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public          # everything below public/ will be preserved
+          retention-days: 1     # artifact only needed until deployment
+
+      # 5. Publish to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment          # exposes 'deployment-url' output
+
+      # 6. (Optional) Print the live URL
+      - name: Show live URL
+        run: |
+          echo "✅ Site is live at: ${{ steps.deployment.outputs.page_url }}"
