@@ -30,12 +30,19 @@ typings and bundles a ready-to-consume `dist` folder.
 ```bash
 pnpm install algoria-utils
 ```
+
 ### Or use the repository directly for development
 
 ```bash
 git clone <repo-url>
 cd algoria-utils
 pnpm install
+```
+
+You can host schemas locally with a development server as well. The server will run on the **3002** port.
+
+```bash
+pnpm dev
 ```
 
 ## Available npm scripts

@@ -1,7 +1,21 @@
 {
   "name": "algoria-utils",
   "version": "0.0.9",
-  "description": "",
+  "description": "A tiny helper library that ships types, schemas, and other utilities across Algoria project.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chm-org/algoria-utils"
+  },
+  "keywords": ["algoria", "utils"],
+  "author": "Roman Kordas",
+  "license": "BY-NC-SA 4.0",
+  "homepage": "https://github.com/chm-org/algoria-utils",
+  "bugs": {
+    "url": "https://github.com/chm-org/algoria-utils/issues"
+  },
+  "files": [
+    "dist/**/*"
+  ],
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,13 +23,12 @@
     "import": "./dist/index.js"
   },
   "scripts": {
+    "clean": "rm -rf dist",
     "dev": "vite",
-    "build": "npm run get-types && npx tsc",
-    "get-types": "node get-type-from-schema.js"
+    "build": "npm run clean && npm run get-types && npx tsc",
+    "get-types": "node get-type-from-schema.js",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
-  "author": "Roman Kordas",
-  "license": "BY-NC-SA 4.0",
   "devDependencies": {
     "json-schema-to-typescript": "^15.0.4",
     "typescript": "^5.8.2",
